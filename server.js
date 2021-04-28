@@ -1,10 +1,17 @@
 const express = require('express'); //express is a function
 const app = express(); // app is an object
+const posts = require('./models/posts.js');
 
-const grade = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+app.set('view engine', 'ejs');
 
-app.get('/grades/:index', (request, response) => {
-  response.send(grades[request.params.index]);
+app.get('/posts/', (request, response) => {
+  response.render('show.ejs');
+})
+
+app.get('/posts/:index', (request, response) => {
+  response.render('show.ejs', {
+    post: posts[request.params.index]
+  });
 })
 
 app.listen(3000, ()=>{
