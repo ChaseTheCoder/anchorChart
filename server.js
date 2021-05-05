@@ -1,4 +1,3 @@
-const { request, response } = require('express');
 const express = require('express'); //express is a function
 const app = express(); // app is an object
 const posts = require('./models/posts.js');
@@ -8,17 +7,13 @@ const bodyParser = require('body-parser');
 app.set('view engine', 'ejs');
 
 // MIDDLEWARE
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(express.urlencoded({extended:false}));
 
 app.use((request, response, next) => {
   console.log('I run for all routes');
   next();
 })
 
-// See posts(eventually)
-app.get('/posts/', (request, response) => {
-  response.render('show.ejs');
-})
 // Create new post
 app.get('/posts/new', (request, response) => {
   response.render('new.ejs')
@@ -33,6 +28,11 @@ app.get('/posts/:index', (request, response) => {
   response.render('show.ejs', {
     post: posts[request.params.index]
   });
+})
+
+// See posts(eventually)
+app.get('/posts/', (request, response) => {
+  response.render('show.ejs');
 })
 
 app.listen(3000, ()=>{
